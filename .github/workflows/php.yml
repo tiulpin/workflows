@@ -1,0 +1,24 @@
+name: Qodana
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: shopware/platform
+      - name: Download plugins
+        run: |
+          curl -L -o php_annotations.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=108480"
+          unzip php_annotations.zip
+          curl -L -o symphony.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=146611"
+          unzip symphony.zip
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@v4.1.0
+        with:
+          linter: jetbrains/qodana-php
+          additional-volumes: |
+            ${{ github.workspace }}/PHP Annotations:/opt/idea/plugins/php_annotations
+            ${{ github.workspace }}/Symfony Support:/opt/idea/plugins/symphony
