@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: shopware/platform
+          repository: shyim/danger-php
       - name: Download plugins
         run: |
           curl -L -o php_annotations.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=108480"
